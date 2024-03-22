@@ -1,0 +1,168 @@
+<!-- join-meeting.html 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join a Meeting</title>
+</head>
+<body>
+    <header>
+        <h1>Join a Meeting</h1>
+    </header>
+    
+    <div id="join-form">
+        <h2>Join a Meeting</h2>
+        <input type="text" id="meeting-id" placeholder="Meeting ID">
+        <button onclick="joinMeeting()">Join</button>
+    </div>
+
+    <div id="video-container">
+        <video id="localVideo" autoplay muted style="width: 300px; height: 200px;"></video>
+        <video id="remoteVideo" autoplay style="width: 300px; height: 200px;"></video>
+    </div>
+    <script src="server.js"></script>
+    <script>
+        async function joinMeeting() {
+            const meetingId = document.getElementById("meeting-id").value;
+            
+            // Your logic to join the meeting using WebRTC
+            // You'll need to implement this part to establish a video call with the provided meeting ID
+            // This may involve signaling to a signaling server, setting up peer connections, etc.
+            // You can use libraries like SimpleWebRTC, PeerJS, or implement WebRTC directly.
+
+            // Here's a simple example of setting up local video stream (requires getUserMedia)
+            const localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            const localVideo = document.getElementById("localVideo");
+            localVideo.srcObject = localStream;
+
+            // Example code for receiving remote video stream (assuming you have a signaling server)
+            const configuration = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+            const peerConnection = new RTCPeerConnection(configuration);
+            peerConnection.ontrack = (event) => {
+                const remoteVideo = document.getElementById("remoteVideo");
+                remoteVideo.srcObject = event.streams[0];
+            };
+
+            // Your signaling logic to establish connection with the other peer
+            // For example:
+            // const offer = await peerConnection.createOffer();
+            // await peerConnection.setLocalDescription(offer);
+            // sendOfferToSignalingServer(offer);
+
+            // In a real application, you'd need signaling server to exchange offers and answers
+            // Upon receiving an offer or answer from the other peer, you'd need to set it on the peer connection
+            // For example:
+            // peerConnection.setRemoteDescription(offerOrAnswer);
+
+            // This is a simplified example, you'd need to handle signaling and other WebRTC complexities
+        }
+    </script>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Drawing with Video Call</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            cursor: crosshair; /* Change cursor to crosshair */
+        }
+        canvas, video {
+            display: block;
+        }
+        #container {
+            display: flex;
+        }
+        #container > * {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas"></canvas>
+        <video id="localVideo" autoplay></video>
+        <video id="remoteVideo" autoplay></video>
+    </div>
+
+    <script>
+        // Get the canvas element and its context
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size to fill the window
+        canvas.width = window.innerWidth / 2; // Adjusted for layout
+        canvas.height = window.innerHeight;
+
+        // Initialize variables to track drawing
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // Function to start drawing
+        function startDrawing(e) {
+            isDrawing = true;
+            [lastX, lastY] = [e.clientX, e.clientY];
+        }
+
+        // Function to draw lines
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.clientX, e.clientY);
+            ctx.strokeStyle = '#000'; // Set line color
+            ctx.lineWidth = 5; // Set line width
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            [lastX, lastY] = [e.clientX, e.clientY];
+        }
+
+        // Event listeners to track mouse movement
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseout', () => isDrawing = false);
+
+        // Function to resize canvas when window is resized
+        function resizeCanvas() {
+            canvas.width = window.innerWidth / 2; // Adjusted for layout
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('orientationchange', resizeCanvas);
+
+        // Get local and remote video elements
+        const localVideo = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+
+        // Initialize variables for media stream
+        let localStream, remoteStream;
+
+        // Function to start video call
+        async function startVideoCall() {
+            try {
+                // Get local media stream (video and audio)
+                localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                localVideo.srcObject = localStream;
+
+                // Code for setting up remote video stream (using WebRTC, signaling server etc.) would go here
+            } catch (err) {
+                console.error('Error starting video call:', err);
+            }
+        }
+
+        // Call function to start video call
+        startVideoCall();
+    </script>
+</body>
+</html>

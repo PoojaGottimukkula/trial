@@ -1,0 +1,59 @@
+/* Resetting default styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+#schedule-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#schedule-form h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+#schedule-form input[type="date"],
+#schedule-form input[type="time"],
+#schedule-form input[type="text"],
+#schedule-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#schedule-form button {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#schedule-form button:hover {
+    background-color: #0056b3;
+}

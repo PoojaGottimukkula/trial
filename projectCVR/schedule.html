@@ -1,0 +1,59 @@
+<!--schedule-meeting.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule a Meeting</title>
+    <link rel="stylesheet" href="schedule.css">
+</head>
+<body>
+    <header>
+        <h1>Schedule a Meeting</h1>
+    </header>
+    
+    <div id="schedule-form">
+        <h2>Schedule a Meeting</h2>
+        <input type="date" id="meeting-date">
+        <input type="time" id="meeting-time">
+        <input type="text" id="topic" placeholder="Topic">
+        <button onclick="scheduleMeeting()">Schedule</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <script src="server.js"></script>
+    <script>
+        function scheduleMeeting() {
+            window.location.href = 'meet.html';
+        }
+            /*const meetingId = uuidv4(); // Generate a random UUID for meeting ID
+            const date = document.getElementById("meeting-date").value;
+            const time = document.getElementById("meeting-time").value;
+            const topic = document.getElementById("topic").value;
+
+            // Send meeting data (including meetingId) to the server for scheduling
+            // Example:
+            fetch('/schedule-meeting', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ meetingId, date, time, topic })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Meeting scheduled successfully');
+                    // Redirect to another page or show a success message
+                } else {
+                    console.error('Failed to schedule meeting');
+                    // Handle error (e.g., show an error message to the user)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error (e.g., show an error message to the user)
+            });
+        }*/
+    </script>
+</body>
+</html>

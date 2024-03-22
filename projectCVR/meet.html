@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <title>Zoom Meeting URL Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        background-color: #0070f3;
+        color: white;
+        font-size: 2rem;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      form {
+        background-color: #f2f2f2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+      }
+
+      label {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      input[type="text"], input[type="password"] {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        width: 30%;
+      }
+
+      button {
+        background-color: #0070f3;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        margin-top: 1rem;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0057a5;
+      }
+
+      #url-container {
+        background-color: #f2f2f2;
+        border-top: 1px solid #ccc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        margin-top: 1rem;
+      }
+
+      #zoom-url {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+
+      #zoom-url:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Enter your Zoom meeting details:</h1>
+    <form id="zoom-form">
+      <label for="meeting-id">Meeting ID:</label><br>
+      <input type="text" id="meeting-id" name="meeting-id" required><br>
+      <label for="passcode">Passcode:</label><br>
+      <input type="password" id="passcode" name="passcode" required><br>
+      <button type="submit">Generate URL</button>
+    </form>
+    <div id="url-container" style="display:none;">
+      <p>Your Zoom meeting URL is:</p>
+      <a id="zoom-url" target="_blank"></a>
+    </div>
+    <script>
+      const form = document.getElementById('zoom-form');
+      const meetingIdInput = document.getElementById('meeting-id');
+      const passcodeInput = document.getElementById('passcode');
+      const urlContainer = document.getElementById('url-container');
+      const zoomUrl = document.getElementById('zoom-url');
+
+      // Event listener for form submission
+form.addEventListener('submit', (e) => {
+  // Prevent default form submission behavior
+  e.preventDefault();
+  
+  // Retrieve meeting ID and passcode values from input fields
+  const meetingId = meetingIdInput.value;
+  const passcode = passcodeInput.value;
+  
+  // Base URL for Zoom meetings
+  const baseUrl = 'https://zoom.us/j/';
+  
+  // Construct the Zoom meeting URL with meeting ID and passcode
+  const url = `${baseUrl}${meetingId}?pwd=${passcode}`;
+  
+  // Set the generated URL as text content of the zoomUrl anchor tag
+  zoomUrl.textContent = url;
+  
+  // Display the URL container
+  urlContainer.style.display = 'block';
+});
+
+    </script>
+  </body>
+</html>
